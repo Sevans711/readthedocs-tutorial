@@ -60,120 +60,6 @@ def test_custom_docstring_format2(x, y):
     '''
     print(x, y, **kw)
 
-def test_custom_docstring_format3(*, x, y):
-    '''prints x and y. Not intended for actual use; for testing purposes.
-    
-    Trying to check how the docstring is rendered.
-
-    x: any values
-        | wow, x is pretty neat!
-    y: None or bool
-        | default None
-        | multiline docs here for y
-        | I wonder how it will look
-    additional kwargs go to print
-
-    returns None
-    '''
-    print(x, y, **kw)
-
-
-def test_custom_docstring_format4(*, x, y):
-    '''prints x and y. Not intended for actual use; for testing purposes.
-    | Trying to check how the docstring is rendered.
-    | 
-    | here, added a '|' to the start of each line
-    | reference to parameter `x` here
-    | 
-    | x: any values
-    |     wow, x is pretty neat!
-    | y: None or bool
-    |     default None
-    |     multiline docs here for y
-    |     I wonder how it will look
-    | additional kwargs go to print
-    | 
-    | returns None
-    '''
-    print(x, y)
-
-def test_custom_docstring_format5(*, x, y):
-    '''prints x and y. Not intended for actual use; for testing purposes.
-    | Trying to check how the docstring is rendered.
-    
-    | here, added a '|' to the start of each non-blank line
-    | reference to parameter ``x`` here
-    
-    | x: any values
-    |     wow, x is pretty neat!
-    | y: None or bool
-    |     default None
-    |     multiline docs here for y
-    |     I wonder how it will look
-    | additional kwargs go to print
-    
-    | returns None
-    '''
-    print(x, y)
-
-def test_custom_docstring_format6(*, x, y):
-    '''prints x and y. Not intended for actual use; for testing purposes.
-    | Trying to check how the docstring is rendered.
-    
-    | here, added a '|' in one "intuitive" way
-    | reference to parameter ``x`` here
-    
-    x: any values
-    |     wow, x is pretty neat!
-    y: None or bool
-    |     default None
-    |     multiline docs here for y
-    |     I wonder how it will look
-    additional kwargs go to print
-    
-    returns None
-    '''
-    print(x, y)
-
-
-def test_custom_docstring_format7(*, x, y):
-    '''prints x and y. Not intended for actual use; for testing purposes.
-    | Trying to check how the docstring is rendered.
-    
-    here, added a '|' in a different "intuitive" way
-    | reference to parameter ``x`` here
-    
-    x: any values
-        | wow, x is pretty neat!
-    y: None or bool
-        | default None
-        | multiline docs here for y
-        | I wonder how it will look
-    additional kwargs go to print
-    
-    returns None
-    '''
-    print(x, y)
-
-def test_custom_docstring_format8(*, x, y):
-    '''| prints x and y. Not intended for actual use; for testing purposes.
-    | Trying to check how the docstring is rendered.
-    
-    | here, added a '|' in a different "intuitive" way
-    | reference to parameter ``x`` here
-    
-    x: any values
-        | wow, x is pretty neat!
-    y: None or bool
-        | default None
-        | multiline docs here for y
-        | I wonder how it will look
-    additional kwargs go to print
-    
-    returns None
-    '''
-    print(x, y)
-
 def test_custom_docstring_format9(*, x, y):
     '''| prints x and y. Not intended for actual use; for testing purposes.
     | Trying to check how the docstring is rendered.
@@ -181,6 +67,10 @@ def test_custom_docstring_format9(*, x, y):
     | here, added a '|' in a different "intuitive" way
     | reference to parameter ``x`` here
     
+    **z: nothing interesting about z**
+    
+    **z2: cool stuff**
+
     x: any values
         | wow, x is pretty neat!
     y: None or bool
@@ -190,15 +80,15 @@ def test_custom_docstring_format9(*, x, y):
     | additional kwargs go to print
     | returns None
 
-    Here's a thing with indented things below it
-        | first indented
-        | second indented
+    | Here's a thing with indented things below it
+    |     first indented
+    |     second indented
 
-    Here's a thing with subindents too
+    \\-Here's a thing with subindents too2
         | first indent
         | second indent
-            | 2.1 indent
-            | 2.2 indent
+        |     2.1 indent
+        |     2.2 indent
         | third indent
     '''
     print(x, y)

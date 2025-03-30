@@ -2,6 +2,7 @@
 
 import os
 import sys
+import re
 
 from lumache import __version__
 
@@ -46,21 +47,92 @@ html_theme = "pydata_sphinx_theme"
 epub_show_urls = 'footnote'
 
 
+print("wow, we're in conf.py")
+
 # -- Checking if we can fix docstring without manually updating them...
 # solution from chatgpt so it might break...
 
-def preserve_newlines(app, what, name, obj, options, lines):
+def preserve_newlines(app, what, name, obj, options, lines0):
     """Modify docstrings to preserve manual line breaks."""
-    print('debug0in--', what, name, obj, options)
-    print('debug0', lines)
-    new_lines = []
-    for line in lines:
-        if line.strip():  # Preserve non-empty lines
-            new_lines.append(line)
+    print(f'debug0in: {what!r}, {name!r}, {obj!r}, {options!r}')
+    print('debug0', lines0)
+    if len(lines0)<=1 or all(len(l.strip())==0 for l in lines0):
+        return  # don't mess with anything if only 1 line, or empty.
+    lines = [l for l in lines0]  # copy of lines
+    first_nonblank = next((i for i, l in enumerate(lines) if len(l.strip())>0))
+    lines = lines[first_nonblank:]
+    # make groups of lines with same type
+    groups = []
+    group = []
+    gtype = None
+    for l in lines:
+        if len(l.strip())>0:
+            ltype = 'text'
         else:
-            new_lines.append("")  # Keep explicit blank lines
-    lines[:] = new_lines
-    print('debug1', lines)
+            ltype = 'empty'
+        if gtype is None:
+            gtype = ltype
+        if ltype == gtype:
+            group.append(l)
+        else:
+            groups.append((gtype, group))
+            group = [l]
+            gtype = ltype
+    groups.append((gtype, group))
+    # groups of text lines need leading '| ' to respect manual line breaks.
+    # however, need to handle param lines in a special way.
+    #   pname: type / other details
+    #       description (maybe)
+    # --> if no description, add blank description.
+    # --> if description, prepent '| ' in description lines, but indented appropriately.
+    newlines = []
+    for gtype, group in groups:
+        if gtype == 'empty':
+            newlines.extend(group)
+        else:
+            assert gtype == 'text'
+            param_pattern = r'\s*([\w]+(?:,\s*[\w]+)*)\s*:\s*(.+)'
+            if re.fullmatch(param_pattern, group[0]):  # param group
+                indent_ns = [len(l) - len(l.lstrip()) for l in group]
+                params_lines = []  # groups of plines
+                indent = None
+                for i in range(len(group)):
+                    l = group[i]
+                    if indent is None:  # first line -- new param
+                        assert i==0
+                        indent = indent_ns[0]
+                        sub_indent_n = None
+                        plines = [l]
+                    elif indent_ns[i] == indent:  # next new param
+                        if len(plines) == 1:  # no description --> make bold & add blank description.
+                            plines[0] = f'**{plines[0]}**'
+                            plines.append('')
+                        params_lines.append(plines)
+                        sub_indent_n = None
+                        plines = [l]
+                    elif indent_ns[i] > indent:  # description line
+                        if sub_indent_n is None:
+                            sub_indent_n = indent_ns[i]
+                            sub_indent = l[:sub_indent_n]
+                        plines.append(f'{sub_indent}| {l[sub_indent_n:]}')
+                    else:
+                        raise ValueError(f"unexpected indent: {l!r}")
+                # add final param group
+                if len(plines) == 1:
+                    plines[0] = f'**{plines[0]}**'
+                    plines.append('')
+                params_lines.append(plines)
+                # add to newlines
+                for plines in params_lines:
+                    newlines.extend(plines)
+            else:  # non-param group
+                indent_n = len(group[0]) - len(group[0].lstrip())
+                indent = group[0][:indent_n]
+                grouplines = [f'{indent}| {l}' for l in group]
+                newlines.extend(grouplines)
+    # edit input lines to adjust sphinx output :)
+    print('debug1', newlines)
+    lines0[:] = newlines
 
 def setup(app):
     app.connect("autodoc-process-docstring", preserve_newlines)
