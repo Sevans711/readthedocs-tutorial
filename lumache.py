@@ -21,3 +21,27 @@ def get_random_ingredients(kind=None):
     :rtype: list[str]
     """
     return ["shells", "gorgonzola", "parsley"]
+
+
+def test_custom_docstring_format0(x, y=None):
+    '''prints x and y. Not intended for actual use; for testing purposes.
+    Trying to check how the docstring is rendered.
+    '''
+    print(x, y)
+
+def test_custom_docstring_format1(x, y=None, **kw):
+    '''prints x and y. Not intended for actual use; for testing purposes.
+    
+    Trying to check how the docstring is rendered.
+
+    x: any value
+        wow, x is so cool!
+    y: None or bool
+        default None
+        multiline docs here for y
+        I wonder how it will look
+    additional kwargs go to print
+
+    returns None
+    '''
+    print(x, y, **kw)
