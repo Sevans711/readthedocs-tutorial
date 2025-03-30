@@ -76,3 +76,23 @@ def test_custom_docstring_format3(*, x, y):
     returns None
     '''
     print(x, y, **kw)
+
+
+def test_custom_docstring_format4(*, x, y):
+    '''prints x and y. Not intended for actual use; for testing purposes.
+    | Trying to check how the docstring is rendered.
+    | 
+    | here, added a '|' to the start of each line
+    | reference to parameter `x` here
+    | 
+    | x: any values
+    |     wow, x is pretty neat!
+    | y: None or bool
+    |     default None
+    |     multiline docs here for y
+    |     I wonder how it will look
+    | additional kwargs go to print
+    | 
+    | returns None
+    '''
+    print(x, y, **kw)
