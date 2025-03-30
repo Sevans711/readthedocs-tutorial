@@ -154,3 +154,51 @@ def test_custom_docstring_format7(*, x, y):
     returns None
     '''
     print(x, y)
+
+def test_custom_docstring_format8(*, x, y):
+    '''| prints x and y. Not intended for actual use; for testing purposes.
+    | Trying to check how the docstring is rendered.
+    
+    | here, added a '|' in a different "intuitive" way
+    | reference to parameter ``x`` here
+    
+    x: any values
+        | wow, x is pretty neat!
+    y: None or bool
+        | default None
+        | multiline docs here for y
+        | I wonder how it will look
+    additional kwargs go to print
+    
+    returns None
+    '''
+    print(x, y)
+
+def test_custom_docstring_format9(*, x, y):
+    '''| prints x and y. Not intended for actual use; for testing purposes.
+    | Trying to check how the docstring is rendered.
+    
+    | here, added a '|' in a different "intuitive" way
+    | reference to parameter ``x`` here
+    
+    x: any values
+        | wow, x is pretty neat!
+    y: None or bool
+        | default None
+        | multiline docs here for y
+        | I wonder how it will look
+    | additional kwargs go to print
+    | returns None
+
+    Here's a thing with indented things below it
+        | first indented
+        | second indented
+
+    Here's a thing with subindents too
+        | first indent
+        | second indent
+            | 2.1 indent
+            | 2.2 indent
+        | third indent
+    '''
+    print(x, y)
