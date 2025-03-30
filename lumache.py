@@ -2,6 +2,8 @@
 Lumache - Python library for cooks and food lovers.
 """
 
+import numpy as np
+
 __version__ = "0.1.1"
 
 
