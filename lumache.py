@@ -95,4 +95,62 @@ def test_custom_docstring_format4(*, x, y):
     | 
     | returns None
     '''
-    print(x, y, **kw)
+    print(x, y)
+
+def test_custom_docstring_format5(*, x, y):
+    '''prints x and y. Not intended for actual use; for testing purposes.
+    | Trying to check how the docstring is rendered.
+    
+    | here, added a '|' to the start of each non-blank line
+    | reference to parameter ``x`` here
+    
+    | x: any values
+    |     wow, x is pretty neat!
+    | y: None or bool
+    |     default None
+    |     multiline docs here for y
+    |     I wonder how it will look
+    | additional kwargs go to print
+    
+    | returns None
+    '''
+    print(x, y)
+
+def test_custom_docstring_format6(*, x, y):
+    '''prints x and y. Not intended for actual use; for testing purposes.
+    | Trying to check how the docstring is rendered.
+    
+    | here, added a '|' in one "intuitive" way
+    | reference to parameter ``x`` here
+    
+    x: any values
+    |     wow, x is pretty neat!
+    y: None or bool
+    |     default None
+    |     multiline docs here for y
+    |     I wonder how it will look
+    additional kwargs go to print
+    
+    returns None
+    '''
+    print(x, y)
+
+
+def test_custom_docstring_format7(*, x, y):
+    '''prints x and y. Not intended for actual use; for testing purposes.
+    | Trying to check how the docstring is rendered.
+    
+    here, added a '|' in a different "intuitive" way
+    | reference to parameter ``x`` here
+    
+    x: any values
+        | wow, x is pretty neat!
+    y: None or bool
+        | default None
+        | multiline docs here for y
+        | I wonder how it will look
+    additional kwargs go to print
+    
+    returns None
+    '''
+    print(x, y)
