@@ -2,6 +2,8 @@ API
 ===
 
 .. autosummary::
-   :toctree: generated
+   :toctree: _autosummary
+   :template: custom_module_template.rst
+   :recursive:
 
    lumache

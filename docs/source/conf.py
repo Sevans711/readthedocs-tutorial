@@ -1,6 +1,14 @@
 # Configuration file for the Sphinx documentation builder.
 
+import os
+import sys
+
 from lumache import __version__
+
+# Source code dir relative to this file;
+# used by api.rst's autosummary
+sys.path.insert(0, os.path.abspath(os.path.join('..', '..')))
+
 
 # -- Project information
 
