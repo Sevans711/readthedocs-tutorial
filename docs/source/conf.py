@@ -1,13 +1,15 @@
 # Configuration file for the Sphinx documentation builder.
 
+from lumache import __version__
+
 # -- Project information
 
 project = 'Lumache'
 copyright = '2021, Graziella'
 author = 'Graziella'
 
-release = '0.1'
-version = '0.1.0'
+release = __version__
+version = __version__
 
 # -- General configuration
 
