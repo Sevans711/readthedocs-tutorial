@@ -45,3 +45,34 @@ def test_custom_docstring_format1(x, y=None, **kw):
     returns None
     '''
     print(x, y, **kw)
+
+
+def test_custom_docstring_format2(x, y):
+    '''prints x and y. Not intended for actual use; for testing purposes.
+    
+    Trying to check how the docstring is rendered.
+
+    x, y: any values
+        wow, they are so cool!
+        Here's another line about it.
+
+    returns None
+    '''
+    print(x, y, **kw)
+
+def test_custom_docstring_format3(*, x, y):
+    '''prints x and y. Not intended for actual use; for testing purposes.
+    
+    Trying to check how the docstring is rendered.
+
+    x: any values
+        | wow, x is pretty neat!
+    y: None or bool
+        | default None
+        | multiline docs here for y
+        | I wonder how it will look
+    additional kwargs go to print
+
+    returns None
+    '''
+    print(x, y, **kw)
