@@ -51,6 +51,8 @@ epub_show_urls = 'footnote'
 
 def preserve_newlines(app, what, name, obj, options, lines):
     """Modify docstrings to preserve manual line breaks."""
+    print('debug0in--', what, name, obj, options)
+    print('debug0', lines)
     new_lines = []
     for line in lines:
         if line.strip():  # Preserve non-empty lines
@@ -58,6 +60,7 @@ def preserve_newlines(app, what, name, obj, options, lines):
         else:
             new_lines.append("")  # Keep explicit blank lines
     lines[:] = new_lines
+    print('debug1', lines)
 
 def setup(app):
     app.connect("autodoc-process-docstring", preserve_newlines)
