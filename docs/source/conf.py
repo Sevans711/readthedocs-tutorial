@@ -44,3 +44,20 @@ html_theme = "pydata_sphinx_theme"
 
 # -- Options for EPUB output
 epub_show_urls = 'footnote'
+
+
+# -- Checking if we can fix docstring without manually updating them...
+# solution from chatgpt so it might break...
+
+def preserve_newlines(app, what, name, obj, options, lines):
+    """Modify docstrings to preserve manual line breaks."""
+    new_lines = []
+    for line in lines:
+        if line.strip():  # Preserve non-empty lines
+            new_lines.append(line)
+        else:
+            new_lines.append("")  # Keep explicit blank lines
+    lines[:] = new_lines
+
+def setup(app):
+    app.connect("autodoc-process-docstring", preserve_newlines)
