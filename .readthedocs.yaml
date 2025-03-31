@@ -7,7 +7,7 @@ build:
   jobs:
     build:  # checking if this behaves as I expect...
       html:
-        python -m sphinx -T -b html -d _build/doctrees -D language=en . $READTHEDOCS_OUTPUT/html
+        - python -m sphinx -T -b html -d _build/doctrees -D language=en . $READTHEDOCS_OUTPUT/html
 
 python:
   install:
